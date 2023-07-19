@@ -40,7 +40,8 @@ public class Interactor : MonoBehaviour
 
                 if (hitObject.CompareTag("Item"))
                 {
-                    inventory.PickUp(hitObject.GetComponent<Item>());
+                    inventory.PickUp(hitObject);
+                    Debug.Log("Item is hit");
                 }
 
                 if (hitObject.CompareTag("Interactable"))

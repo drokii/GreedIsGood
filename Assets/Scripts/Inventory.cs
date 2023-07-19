@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public int inventorySize = 25;
-    Item[] inventory;
+    public int inventoryMaximumCapacity = 25;
+    List<Item> inventory;
     void Start()
     {
-        inventory = new Item[inventorySize];
+        inventory = new List<Item>();
     }
 
     void Update()
@@ -16,11 +16,13 @@ public class Inventory : MonoBehaviour
         
     }
 
-    public void PickUp(Item item)
+    public void PickUp(GameObject item)
     {
-        if (inventory.Length < 25)
+        if (inventory.Count < inventoryMaximumCapacity)
         {
-            inventory[inventory.Length + 1] = item;
+            inventory.Add(item.GetComponent<Item>());
+            Debug.Log(inventory.Count);
+            Destroy(item);
         }
     }
 
