@@ -13,11 +13,11 @@ public class Interactor : MonoBehaviour
 
     public float pickupDistance = 2f;
 
-    private Inventory inventory;
+    private PlayerInventory inventory;
 
     private void Start()
     {
-        inventory = gameObject.GetComponent<Inventory>();
+        inventory = gameObject.GetComponent<PlayerInventory>();
     }
 
     void Update()

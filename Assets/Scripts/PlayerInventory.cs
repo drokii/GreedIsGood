@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class PlayerInventory : MonoBehaviour
 {
     public int inventoryMaximumCapacity = 25;
-    List<Item> inventory;
+
+    private List<Item> items = new List<Item>();
+
+    public List<Item> Items { get => items;}
+
     void Start()
     {
-        inventory = new List<Item>();
     }
 
     void Update()
@@ -18,10 +21,10 @@ public class Inventory : MonoBehaviour
 
     public void PickUp(GameObject item)
     {
-        if (inventory.Count < inventoryMaximumCapacity)
+        if (Items.Count < inventoryMaximumCapacity)
         {
-            inventory.Add(item.GetComponent<Item>());
-            Debug.Log(inventory.Count);
+            Items.Add(item.GetComponent<Item>());
+            Debug.Log(Items.Count);
             Destroy(item);
         }
     }

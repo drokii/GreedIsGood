@@ -11,6 +11,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     [HideInInspector]
     public Transform parentAfterDrag;
+    public Item item;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -28,6 +29,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+    }
+
+    public void SetupItem(Item newItem)
+    {
+        item = newItem;
+        image.sprite = item.inventoryIcon.sprite;
     }
 
 }
