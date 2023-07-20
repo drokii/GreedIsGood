@@ -8,30 +8,58 @@ public class PlayerInventory : MonoBehaviour
 
     private List<Item> items = new List<Item>();
 
-    public List<Item> Items { get => items;}
+    public List<Item> Items { get => items; }
 
-    void Start()
+    public void PickUp(GameObject pickup)
     {
-    }
+        Item item = pickup.GetComponent<Item>();
 
-    void Update()
-    {
-        
-    }
-
-    public void PickUp(GameObject item)
-    {
-        if (Items.Count < inventoryMaximumCapacity)
+        if (items.Count > inventoryMaximumCapacity)
         {
-            Items.Add(item.GetComponent<Item>());
-            Debug.Log(Items.Count);
+            //TODO: Inventory Full Alert
+            Debug.Log("Inventory Is Full!");
+            return;
+        }
+
+        if (ItemTypeAlreadyInInventory(item))
+        {
+            AddToItemQuantity(item);
             Destroy(item);
         }
+        else
+        {
+            items.Add(item);
+            Debug.Log(items.Count);
+            Destroy(item);
+        }
+
     }
 
-    private void Drop(){
+    public void Drop()
+    {
 
     }
 
+    private bool ItemTypeAlreadyInInventory(Item itemToCompare)
+    {
+        foreach (Item item in items)
+        {
+            if (itemToCompare.GetType() == item.GetType())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void AddToItemQuantity(Item itemToAdd)
+    {
+        foreach (Item item in items)
+        {
+            if (itemToAdd.GetType() == item.GetType())
+            {
+                item.quantity = +itemToAdd.quantity;
+            }
+        }
+    }
 }

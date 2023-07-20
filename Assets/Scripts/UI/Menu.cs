@@ -7,13 +7,11 @@ public class Menu : MonoBehaviour
     public GameObject inventoryMenu;
     public PlayerCamera playerCamera;
 
-    // Start is called before the first frame update
     void Start()
     {
         inventoryMenu.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -21,6 +19,7 @@ public class Menu : MonoBehaviour
             if (!inventoryMenu.activeInHierarchy)
             {
                 inventoryMenu.SetActive(true);
+                inventoryMenu.GetComponent<InventoryMenu>().loadItemsFromPlayerInventory();
                 playerCamera.enabled = false;
                 Cursor.lockState = CursorLockMode.None;
             }

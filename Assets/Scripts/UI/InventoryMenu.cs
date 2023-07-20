@@ -9,13 +9,12 @@ public class InventoryMenu : MonoBehaviour
 
     public GameObject inventorySlotPrefab;
 
-    // Start is called before the first frame update
     void Start()
     {
         loadItemsFromPlayerInventory();
     }
 
-    private void loadItemsFromPlayerInventory()
+    public void loadItemsFromPlayerInventory()
     {
         foreach (Item item in playerInventory.Items)
         {

@@ -29,11 +29,11 @@ public class Interactor : MonoBehaviour
     private void ProcessPlayerInput()
     {
         if (Input.GetKey(KeyCode.E))
-        {   
+        {
             interactionRaycast = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0f));
 
             Physics.Raycast(interactionRaycast, out interactionRaycastHit, pickupDistance);
-         
+
             if (interactionRaycastHit.collider != null)
             {
                 GameObject hitObject = interactionRaycastHit.collider.gameObject;
