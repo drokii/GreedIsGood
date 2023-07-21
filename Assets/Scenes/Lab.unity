@@ -522,12 +522,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 94199677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a955cf8e152b63a438266f1e2815e111, type: 3}
+  m_Script: {fileID: 11500000, guid: 51132165d06e7ec4e94c0cb1c4e46dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stackable: 0
-  inventoryIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  quantity: 1
+  item: {fileID: 11400000, guid: 09ec95d28e081f24bad632f42a0c16a0, type: 2}
 --- !u!1001 &110069538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1443,6 +1441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryMaximumCapacity: 25
+  items: []
 --- !u!1001 &590922103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4168,7 +4167,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1b9854cb4546be94796b7c0e97c44249, type: 2}
+  - {fileID: 2100000, guid: 98273457a6de9ab48b8208a2719511cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

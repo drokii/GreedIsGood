@@ -34,7 +34,7 @@ public class InventoryItemIcon : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void SetupItem(Item newItem)
     {
         item = newItem;
-        image.sprite = item.inventoryIcon;
+        image.sprite = item.InventoryIcon;
     }
 
 }

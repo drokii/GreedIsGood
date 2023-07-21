@@ -1,30 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class InventoryMenu : MonoBehaviour
 {
     public PlayerInventory playerInventory;
-    public List<InventorySlot> inventorySlots;
+    public InventorySlot[] inventorySlots;
 
     public GameObject inventoryIconPrefab;
 
-    void Start()
+    void OnEnable()
     {
-        loadItemsFromPlayerInventory();
+        if (playerInventory.inventoryContentsChanged)
+        {
+            loadItemsFromPlayerInventory();
+            playerInventory.inventoryContentsChanged = false;
+        }
+        
     }
 
     public void loadItemsFromPlayerInventory()
     {
+        clearInventorySlots();
         foreach (Item item in playerInventory.Items)
         {
-            foreach(InventorySlot slot in inventorySlots)
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
+                InventorySlot slot = inventorySlots[i];
                 if (slot.CanAcceptItem(item))
                 {
                     FillInventorySlotWithItem(item, slot);
                     break;
                 }
+            }
+        }
+    }
+
+    private void clearInventorySlots()
+    {
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            if (slot.transform.childCount != 0)
+            {
+                Destroy(slot.transform.GetChild(0).gameObject);
             }
         }
     }

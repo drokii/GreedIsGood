@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public int inventoryMaximumCapacity = 25;
+    [SerializeField] private int inventoryMaximumCapacity = 25;
+    public bool inventoryContentsChanged;
 
-    private List<Item> items = new List<Item>();
+
+    [SerializeField] private List<Item> items = new List<Item>();
 
     public List<Item> Items { get => items; }
 
     public void PickUp(GameObject pickup)
     {
-        Item item = pickup.GetComponent<Item>();
+        Item item = pickup.GetComponent<ItemContainer>().Item;
 
         if (items.Count > inventoryMaximumCapacity)
         {
@@ -21,16 +23,18 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
-        if (ItemTypeAlreadyInInventory(item))
+        if (ItemTypeAlreadyInInventory(item) && item.Stackable)
         {
             AddToItemQuantity(item);
             Destroy(pickup);
+            inventoryContentsChanged = true;
         }
         else
         {
             items.Add(item);
             Debug.Log(items.Count);
             Destroy(pickup);
+            inventoryContentsChanged = true;
         }
 
     }
@@ -56,7 +60,7 @@ public class PlayerInventory : MonoBehaviour
     {
         foreach (Item item in items)
         {
-            if (itemToAdd.GetType() == item.GetType())
+            if (itemToAdd.GetType() == item.GetType() && item.Stackable)
             {
                 item.quantity = +itemToAdd.quantity;
             }

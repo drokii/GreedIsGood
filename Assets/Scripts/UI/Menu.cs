@@ -20,7 +20,6 @@ public class Menu : MonoBehaviour
             if (!inventoryMenu.activeInHierarchy)
             {
                 inventoryMenu.SetActive(true);
-                inventoryMenu.GetComponent<InventoryMenu>().loadItemsFromPlayerInventory();
                 playerCamera.enabled = false;
                 Cursor.visible = true;
                 Debug.Log(Cursor.visible);

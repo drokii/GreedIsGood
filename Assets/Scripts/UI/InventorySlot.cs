@@ -24,10 +24,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public bool CanAcceptItem(Item item)
     {
         if (IsEmpty()) return true;
+        Debug.Log(transform.childCount);
 
-        Item itemInSlot = transform.GetChild(0).GetComponent<Item>();
+        Item itemInSlot = transform.GetChild(0).GetComponent<InventoryItemIcon>().item;
 
-        if (itemInSlot.stackable && item.GetType() == itemInSlot.GetType())
+        if (itemInSlot.Stackable && item.GetType() == itemInSlot.GetType())
         {
             return true;
         }
