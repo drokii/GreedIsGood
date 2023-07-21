@@ -7,7 +7,7 @@ public class InventoryMenu : MonoBehaviour
     public PlayerInventory playerInventory;
     public List<InventorySlot> inventorySlots;
 
-    public GameObject inventorySlotPrefab;
+    public GameObject inventoryIconPrefab;
 
     void Start()
     {
@@ -31,8 +31,8 @@ public class InventoryMenu : MonoBehaviour
 
     private void FillInventorySlotWithItem(Item item, InventorySlot slot)
     {
-        GameObject newItem = Instantiate(inventorySlotPrefab, slot.transform);
-        InventoryItem inventoryItem = newItem.GetComponent<InventoryItem>();
+        GameObject newItem = Instantiate(inventoryIconPrefab, slot.transform);
+        InventoryItemIcon inventoryItem = newItem.GetComponent<InventoryItemIcon>();
         inventoryItem.SetupItem(item);
     }
 }

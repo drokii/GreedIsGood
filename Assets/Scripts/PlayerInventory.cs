@@ -24,13 +24,13 @@ public class PlayerInventory : MonoBehaviour
         if (ItemTypeAlreadyInInventory(item))
         {
             AddToItemQuantity(item);
-            Destroy(item);
+            Destroy(pickup);
         }
         else
         {
             items.Add(item);
             Debug.Log(items.Count);
-            Destroy(item);
+            Destroy(pickup);
         }
 
     }

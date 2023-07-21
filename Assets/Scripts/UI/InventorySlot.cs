@@ -10,7 +10,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         if (IsEmpty())
         {
-            InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+            InventoryItemIcon inventoryItem = eventData.pointerDrag.GetComponent<InventoryItemIcon>();
             inventoryItem.parentAfterDrag = transform;
         }
 
@@ -25,7 +25,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         if (IsEmpty()) return true;
 
-        Item itemInSlot = transform.GetChild(0).GetComponents<Item>()[0];
+        Item itemInSlot = transform.GetChild(0).GetComponent<Item>();
 
         if (itemInSlot.stackable && item.GetType() == itemInSlot.GetType())
         {

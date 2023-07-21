@@ -27,7 +27,7 @@ public class Menu : MonoBehaviour
             {
                 inventoryMenu.SetActive(false);
                 playerCamera.enabled = true;
-                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.Confined;
             }
         }
         
