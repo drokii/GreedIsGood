@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
     void Start()
     {
         inventoryMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
@@ -21,13 +22,15 @@ public class Menu : MonoBehaviour
                 inventoryMenu.SetActive(true);
                 inventoryMenu.GetComponent<InventoryMenu>().loadItemsFromPlayerInventory();
                 playerCamera.enabled = false;
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Debug.Log(Cursor.visible);
             }
             else
             {
                 inventoryMenu.SetActive(false);
                 playerCamera.enabled = true;
-                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = false;
+                Debug.Log(Cursor.visible);
             }
         }
         
