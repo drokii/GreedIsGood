@@ -10,18 +10,16 @@ public class InventoryMenu : MonoBehaviour
 
     void OnEnable()
     {
-        if (playerInventory.inventoryContentsChanged)
+        if (playerInventory.AddedInventoryContents.Count != 0)
         {
-            loadItemsFromPlayerInventory();
-            playerInventory.inventoryContentsChanged = false;
+            synchronizeWithPlayerInventory();
         }
         
     }
 
-    public void loadItemsFromPlayerInventory()
+    private void synchronizeWithPlayerInventory()
     {
-        clearInventorySlots();
-        foreach (Item item in playerInventory.Items)
+        foreach (Item item in playerInventory.AddedInventoryContents)
         {
             for (int i = 0; i < inventorySlots.Length; i++)
             {
@@ -33,6 +31,8 @@ public class InventoryMenu : MonoBehaviour
                 }
             }
         }
+
+        playerInventory.AddedInventoryContents.Clear();
     }
 
     private void clearInventorySlots()

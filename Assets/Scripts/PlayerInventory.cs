@@ -5,12 +5,15 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private int inventoryMaximumCapacity = 25;
-    public bool inventoryContentsChanged;
+    [SerializeField] private List<Item> addedInventoryContents = new List<Item>();
+    [SerializeField] private List<Item> droppedInventoryContents = new List<Item>();
 
 
     [SerializeField] private List<Item> items = new List<Item>();
 
     public List<Item> Items { get => items; }
+    public List<Item> AddedInventoryContents { get => addedInventoryContents; }
+    public List<Item> DroppedInventoryContents { get => droppedInventoryContents; }
 
     public void PickUp(GameObject pickup)
     {
@@ -27,14 +30,14 @@ public class PlayerInventory : MonoBehaviour
         {
             AddToItemQuantity(item);
             Destroy(pickup);
-            inventoryContentsChanged = true;
+            addedInventoryContents.Add(item);
         }
         else
         {
             items.Add(item);
             Debug.Log(items.Count);
             Destroy(pickup);
-            inventoryContentsChanged = true;
+            addedInventoryContents.Add(item);
         }
 
     }
