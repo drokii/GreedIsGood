@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a955cf8e152b63a438266f1e2815e111, type: 3}
-  m_Name: TestItem
+  m_Name: Testy Boy
   m_EditorClassIdentifier: 
   stackable: 0
   inventoryIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   name: Testy Boy
+  prefab: {fileID: 7419393585123337969, guid: 065b880fee9b9a749a717d45abd85495, type: 3}
   quantity: 1

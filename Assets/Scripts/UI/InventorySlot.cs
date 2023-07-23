@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour, IDropHandler
+public class InventorySlot : MonoBehaviour, IDropHandler 
 {
     public void OnDrop(PointerEventData eventData)
     {
@@ -24,7 +24,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public bool CanAcceptItem(Item item)
     {
         if (IsEmpty()) return true;
-        Debug.Log(transform.childCount);
 
         Item itemInSlot = transform.GetChild(0).GetComponent<InventoryItemIcon>().item;
 
