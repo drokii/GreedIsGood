@@ -13,11 +13,11 @@ public class Interactor : MonoBehaviour
 
     public float pickupDistance = 2f;
 
-    private Inventory inventory;
+    private PlayerInventory inventory;
 
     private void Start()
     {
-        inventory = gameObject.GetComponent<Inventory>();
+        inventory = gameObject.GetComponent<PlayerInventory>();
     }
 
     void Update()
@@ -29,11 +29,11 @@ public class Interactor : MonoBehaviour
     private void ProcessPlayerInput()
     {
         if (Input.GetKey(KeyCode.E))
-        {   
+        {
             interactionRaycast = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0f));
 
             Physics.Raycast(interactionRaycast, out interactionRaycastHit, pickupDistance);
-         
+
             if (interactionRaycastHit.collider != null)
             {
                 GameObject hitObject = interactionRaycastHit.collider.gameObject;
@@ -41,7 +41,6 @@ public class Interactor : MonoBehaviour
                 if (hitObject.CompareTag("Item"))
                 {
                     inventory.PickUp(hitObject);
-                    Debug.Log("Item is hit");
                 }
 
                 if (hitObject.CompareTag("Interactable"))
