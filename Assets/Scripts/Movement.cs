@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour
     public float airMultiplier = 0.4f ;
     bool readyToJump;
 
-    public float fallMultiplier = 10f;
+    public float fallMultiplier = 1.5f;
 
 
     [HideInInspector] public float walkSpeed;
