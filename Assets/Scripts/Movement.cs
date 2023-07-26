@@ -118,7 +118,7 @@ public class Movement : MonoBehaviour
 
         if(!isGrounded && playerRigidbody.velocity.y < 1)
         {
-            playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
         }
     }
 
