@@ -14,6 +14,9 @@ public class Movement : MonoBehaviour
     public float airMultiplier = 0.4f ;
     bool readyToJump;
 
+    public float fallMultiplier = 10f;
+
+
     [HideInInspector] public float walkSpeed;
     [HideInInspector] public float sprintSpeed;
 
@@ -23,7 +26,7 @@ public class Movement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask ground;
-    bool grounded;
+    bool isGrounded;
     public float groundCheckOffsetDistance = 0.8f;
 
     public Transform orientation;
@@ -45,22 +48,24 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        // ground check
         CheckIfGrounded();
-
         ProcessPlayerInput();
-        LimitPlayerSpeed();
+        CorrectPlayerSpeed();
+        HandleDrag();
 
-        // handle drag
-        if (grounded)
+
+       
+    }
+    private void HandleDrag()
+    {
+        if (isGrounded)
             playerRigidbody.drag = groundDrag;
         else
-            playerRigidbody.drag = 0;
+            playerRigidbody.drag = 1;
     }
-
     private void CheckIfGrounded()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * groundCheckOffsetDistance, ground);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * groundCheckOffsetDistance, ground);
     }
 
     private void FixedUpdate()
@@ -74,7 +79,7 @@ public class Movement : MonoBehaviour
         verticalKeyboardInput = Input.GetAxisRaw("Vertical");
 
         // Jumping
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && isGrounded)
         {
             readyToJump = false;
 
@@ -89,15 +94,19 @@ public class Movement : MonoBehaviour
         // Make sure to walk in the direction you're facing.
         moveDirection = orientation.forward * verticalKeyboardInput + orientation.right * horizontalKeyboardInput;
 
-        // Move depending on whether grounded, or airstrafing
-        if (grounded)
+        // Move depending on whether isGrounded, or airstrafing
+        if (isGrounded)
             playerRigidbody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
-        else if (!grounded)
-            playerRigidbody.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        else if (!isGrounded)
+            playerRigidbody.AddForce(moveDirection.normalized * moveSpeed * 5f * airMultiplier, ForceMode.Force);
     }
 
-    private void LimitPlayerSpeed()
+    /*
+     * In order to not only correct "illegal" speed limit breaches, but also fix the weird floaty falling, we correct the player speed at specific places.
+     * TODO: Refactor into different functions because of SR
+     */
+    private void CorrectPlayerSpeed()
     {
         Vector3 flatVelocity = new Vector3(playerRigidbody.velocity.x, 0f, playerRigidbody.velocity.z);
 
@@ -105,6 +114,11 @@ public class Movement : MonoBehaviour
         {
             Vector3 limitedVel = flatVelocity.normalized * moveSpeed;
             playerRigidbody.velocity = new Vector3(limitedVel.x, playerRigidbody.velocity.y, limitedVel.z);
+        }
+
+        if(!isGrounded && playerRigidbody.velocity.y < 1)
+        {
+            playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
     }
 
