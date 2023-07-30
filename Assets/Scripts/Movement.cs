@@ -2,26 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Movement : MonoBehaviour
 {
+
+
     [Header("Movement")]
-    public float moveSpeed = 6;
-
+    // BASE VARIABLES
+    public float baseMoveSpeed = 6;
     public float groundDrag = 5;
+    public MovementState movementState;
+    public Transform orientation;
 
+    // JUMPING
     public float jumpForce = 7;
-    public float jumpCooldown= 0.25f;
-    public float airMultiplier = 0.4f ;
+    public float jumpCooldown = 0.25f;
+    public float airMultiplier = 0.4f;
     bool readyToJump;
-
     public float fallMultiplier = 1.5f;
 
+    // SPRINTING
+    public float sprintingSpeed = 12;
 
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
+    // CROUCHING
+    public float crouchingSpeed = 2;
+
+    // WALKING
+    public float walkingSpeed = 4;
+
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode walkKey = KeyCode.X;
+
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -29,7 +44,6 @@ public class Movement : MonoBehaviour
     bool isGrounded;
     public float groundCheckOffsetDistance = 0.8f;
 
-    public Transform orientation;
 
     float horizontalKeyboardInput;
     float verticalKeyboardInput;
@@ -52,10 +66,8 @@ public class Movement : MonoBehaviour
         ProcessPlayerInput();
         CorrectPlayerSpeed();
         HandleDrag();
-
-
-       
     }
+
     private void HandleDrag()
     {
         if (isGrounded)
@@ -78,14 +90,37 @@ public class Movement : MonoBehaviour
         horizontalKeyboardInput = Input.GetAxisRaw("Horizontal");
         verticalKeyboardInput = Input.GetAxisRaw("Vertical");
 
-        // Jumping
-        if (Input.GetKey(jumpKey) && readyToJump && isGrounded)
+        if (isGrounded)
         {
-            readyToJump = false;
+            if (Input.GetKeyDown(jumpKey) && readyToJump)
+            {
+                readyToJump = false;
 
-            Jump();
+                Jump();
 
-            Invoke(nameof(ResetJump), jumpCooldown);
+                Invoke(nameof(ResetJump), jumpCooldown);
+                return;
+            }
+
+            if (Input.GetKey(sprintKey))
+            {
+                movementState = MovementState.SPRINTING;
+                return;
+            }
+
+            if (Input.GetKey(walkKey))
+            {
+                movementState = MovementState.WALKING;
+                return;
+            }
+
+            if (Input.GetKey(crouchKey))
+            {
+                movementState = MovementState.CROUCHING;
+                return;
+            }
+
+            movementState = MovementState.RUNNING;
         }
     }
 
@@ -94,12 +129,29 @@ public class Movement : MonoBehaviour
         // Make sure to walk in the direction you're facing.
         moveDirection = orientation.forward * verticalKeyboardInput + orientation.right * horizontalKeyboardInput;
 
-        // Move depending on whether isGrounded, or airstrafing
-        if (isGrounded)
-            playerRigidbody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        if (!isGrounded)
+        {
+            playerRigidbody.AddForce(moveDirection.normalized * baseMoveSpeed * 10f * airMultiplier, ForceMode.Force);
+            return;
+        }
 
-        else if (!isGrounded)
-            playerRigidbody.AddForce(moveDirection.normalized * moveSpeed * 5f * airMultiplier, ForceMode.Force);
+        switch (movementState)
+        {
+            case MovementState.WALKING:
+                playerRigidbody.AddForce(moveDirection.normalized * walkingSpeed * 10f, ForceMode.Force);
+                break;
+            case MovementState.SPRINTING:
+                playerRigidbody.AddForce(moveDirection.normalized * sprintingSpeed * 10f, ForceMode.Force);
+                break;
+            case MovementState.CROUCHING:
+                playerRigidbody.AddForce(moveDirection.normalized * crouchingSpeed * 10f, ForceMode.Force);
+                break;
+            case MovementState.RUNNING:
+                playerRigidbody.AddForce(moveDirection.normalized * baseMoveSpeed * 10f, ForceMode.Force);
+                break;
+
+        }
+
     }
 
     /*
@@ -110,13 +162,13 @@ public class Movement : MonoBehaviour
     {
         Vector3 flatVelocity = new Vector3(playerRigidbody.velocity.x, 0f, playerRigidbody.velocity.z);
 
-        if (flatVelocity.magnitude > moveSpeed)
+        if (flatVelocity.magnitude > baseMoveSpeed)
         {
-            Vector3 limitedVel = flatVelocity.normalized * moveSpeed;
+            Vector3 limitedVel = flatVelocity.normalized * baseMoveSpeed;
             playerRigidbody.velocity = new Vector3(limitedVel.x, playerRigidbody.velocity.y, limitedVel.z);
         }
 
-        if(!isGrounded && playerRigidbody.velocity.y < 1)
+        if (!isGrounded && playerRigidbody.velocity.y < 1)
         {
             playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
         }
@@ -133,4 +185,15 @@ public class Movement : MonoBehaviour
     {
         readyToJump = true;
     }
+
+}
+
+public enum MovementState
+{
+    STILL,
+    WALKING,
+    RUNNING,
+    SPRINTING,
+    JUMPING,
+    CROUCHING
 }
