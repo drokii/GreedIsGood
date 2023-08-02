@@ -1658,6 +1658,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3869688003244195206, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
   m_PrefabInstance: {fileID: 3869688003107840652}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &528513204 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3869688003244195207, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+  m_PrefabInstance: {fileID: 3869688003107840652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528513192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62ff0f1ade033b442ac79f566f5c571b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &590922103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1990,6 +2001,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1be6330e752e98944a9155894a65c816, type: 3}
+--- !u!1 &654101515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 654101516}
+  m_Layer: 6
+  m_Name: CrouchedCameraPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &654101516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654101515}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.277, z: 0.6520002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 528513203}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &661291414
 GameObject:
   m_ObjectHideFlags: 0
@@ -3075,7 +3117,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5933,7 +5975,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8ed4d075655044cb0adc50914c6a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 195515957}
+  normalCameraTransform: {fileID: 195515957}
+  crouchingCameraTransform: {fileID: 654101516}
+  movement: {fileID: 528513204}
 --- !u!114 &1987288398 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8805623080135086845, guid: 1be6330e752e98944a9155894a65c816, type: 3}
@@ -6577,6 +6621,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3869688003244195204, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3869688003244195205, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       propertyPath: m_Mass
       value: 1
@@ -6643,7 +6691,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3869688003244195207, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       propertyPath: fallMultiplier
-      value: 1.5
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869688003244195207, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      propertyPath: sprintingSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869688003285890232, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      propertyPath: m_Name
+      value: NormalCameraPosition
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869688003285890232, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869688003285890233, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.411
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869688003892715352, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3869688003892715353, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6653,9 +6721,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 3869688005138088880, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3869688003244195206, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 654101516}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3869688003244195204, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       insertIndex: -1
