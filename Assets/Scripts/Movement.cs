@@ -56,16 +56,22 @@ public class Movement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.freezeRotation = true;
-
         readyToJump = true;
+        movementState = MovementState.STILL;
+
     }
 
     private void Update()
     {
         CheckIfGrounded();
         ProcessPlayerInput();
-        CorrectPlayerSpeed();
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
         HandleDrag();
+        CorrectPlayerSpeed();
     }
 
     private void HandleDrag()
@@ -80,10 +86,6 @@ public class Movement : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * groundCheckOffsetDistance, ground);
     }
 
-    private void FixedUpdate()
-    {
-        MovePlayer();
-    }
 
     private void ProcessPlayerInput()
     {
@@ -114,13 +116,19 @@ public class Movement : MonoBehaviour
                 return;
             }
 
-            if (Input.GetKey(crouchKey))
+            if (Input.GetKeyDown(crouchKey))
             {
+                Debug.Log(movementState.ToString());
+
+                if (movementState == MovementState.CROUCHING)
+                {
+                    movementState = MovementState.RUNNING;
+                    return;
+                }
+
                 movementState = MovementState.CROUCHING;
                 return;
             }
-
-            movementState = MovementState.RUNNING;
         }
     }
 
@@ -147,6 +155,9 @@ public class Movement : MonoBehaviour
                 playerRigidbody.AddForce(moveDirection.normalized * crouchingSpeed * 10f, ForceMode.Force);
                 break;
             case MovementState.RUNNING:
+                playerRigidbody.AddForce(moveDirection.normalized * baseMoveSpeed * 10f, ForceMode.Force);
+                break;
+            case MovementState.STILL:
                 playerRigidbody.AddForce(moveDirection.normalized * baseMoveSpeed * 10f, ForceMode.Force);
                 break;
 
