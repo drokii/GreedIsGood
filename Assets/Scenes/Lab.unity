@@ -6627,7 +6627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3869688003244195205, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3869688003244195206, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       propertyPath: m_RootOrder
@@ -6695,7 +6695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3869688003244195207, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       propertyPath: sprintingSpeed
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3869688003285890232, guid: 5296aafcc0a01154a8686e5f50bbb64f, type: 3}
       propertyPath: m_Name

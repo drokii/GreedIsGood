@@ -64,7 +64,7 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         CheckIfGrounded();
-        ProcessPlayerInput();
+        DefineMovementState();
     }
 
     private void FixedUpdate()
@@ -87,49 +87,55 @@ public class Movement : MonoBehaviour
     }
 
 
-    private void ProcessPlayerInput()
+    private void DefineMovementState()
     {
         horizontalKeyboardInput = Input.GetAxisRaw("Horizontal");
         verticalKeyboardInput = Input.GetAxisRaw("Vertical");
 
-        if (isGrounded)
+        if (Input.GetKeyDown(jumpKey) && readyToJump)
         {
-            if (Input.GetKeyDown(jumpKey) && readyToJump)
-            {
-                readyToJump = false;
+            readyToJump = false;
 
-                Jump();
+            Jump();
 
-                Invoke(nameof(ResetJump), jumpCooldown);
-                return;
-            }
-
-            if (Input.GetKey(sprintKey))
-            {
-                movementState = MovementState.SPRINTING;
-                return;
-            }
-
-            if (Input.GetKey(walkKey))
-            {
-                movementState = MovementState.WALKING;
-                return;
-            }
-
-            if (Input.GetKeyDown(crouchKey))
-            {
-                Debug.Log(movementState.ToString());
-
-                if (movementState == MovementState.CROUCHING)
-                {
-                    movementState = MovementState.RUNNING;
-                    return;
-                }
-
-                movementState = MovementState.CROUCHING;
-                return;
-            }
+            Invoke(nameof(ResetJump), jumpCooldown);
+            return;
         }
+
+        if (Input.GetKey(sprintKey))
+        {
+            movementState = MovementState.SPRINTING;
+            return;
+        }
+
+        if (Input.GetKey(walkKey))
+        {
+            movementState = MovementState.WALKING;
+            return;
+        }
+
+        if (Input.GetKey(crouchKey))
+        {
+            movementState = MovementState.CROUCHING;
+            return;
+        }
+
+        // If no input, then check whether player is still or just running.
+
+        if (playerRigidbody.velocity == Vector3.zero)
+        {
+            movementState = MovementState.STILL;
+            return;
+
+        }
+        else
+        {
+            movementState = MovementState.RUNNING;
+            return;
+
+        }
+
+
     }
 
     private void MovePlayer()

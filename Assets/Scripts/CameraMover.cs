@@ -11,7 +11,7 @@ public class CameraMover : MonoBehaviour
     public Transform crouchingCameraTransform;
     public Movement movement;
 
-    private float transitionSpeed = 10.0f;
+    private float transitionSpeed = 1.0f;
     private MovementState currentMovementState;
     private Transform currentCameraTransform;
 
