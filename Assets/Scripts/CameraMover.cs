@@ -11,9 +11,7 @@ public class CameraMover : MonoBehaviour
     public Transform crouchingCameraTransform;
     public Movement movement;
 
-    private float transitionSpeed = 1.0f;
-    private MovementState currentMovementState;
-    private Transform currentCameraTransform;
+    private float transitionSpeed = 15f;
 
     void Start()
     {
@@ -21,11 +19,7 @@ public class CameraMover : MonoBehaviour
     }
     void Update()
     {
-
-        transform.position = currentCameraTransform.position;
-
-        if (currentMovementState != movement.movementState) { changePerspectiveBasedOnMovement(); }
-
+        changePerspectiveBasedOnMovement();
     }
 
     private void changePerspectiveBasedOnMovement()
@@ -42,8 +36,7 @@ public class CameraMover : MonoBehaviour
 
     private void setCameraPerspective(Transform newCameraTransform)
     {
-        currentCameraTransform = newCameraTransform;
-        transform.position = Vector3.Lerp(transform.position, normalCameraTransform.position, transitionSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, normalCameraTransform.rotation, transitionSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, newCameraTransform.position, transitionSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newCameraTransform.rotation, transitionSpeed * Time.deltaTime);
     }
 }
