@@ -134,8 +134,6 @@ public class Movement : MonoBehaviour
             return;
 
         }
-
-
     }
 
     private void MovePlayer()
